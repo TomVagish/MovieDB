@@ -1,0 +1,31 @@
+.imgSize{
+    width: 30%;
+    height: 30%;
+    float: left;
+    margin-right: 3%;
+}
+
+.headerPage{
+    background-color: #3d3d3d;
+    padding: 2%;
+
+}
+
+.seriesName{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color:whitesmoke;
+    font-size: 50px;
+    padding: 1%;
+    text-align: center;
+ 
+   
+}
+
+.mainPage{
+    padding: 3%;
+    
+    font-family: 'Courier New', Courier, monospace;
+    background-color: aliceblue;
+}
+
