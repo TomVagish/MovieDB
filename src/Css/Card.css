@@ -58,13 +58,10 @@ text-align: center;
 
 .FigureStyle{
       
-        
         width: 26%;
-        color:rgb(61, 61, 61);
         transition: 0.5s all;
         box-shadow:   3px 3px 3px 3px #ccc;
         border-radius: 3%;
-    
         
            
 }
@@ -73,7 +70,6 @@ text-align: center;
         color: whitesmoke;
         cursor: pointer;
         background-color:rgb(61, 61, 61);
-
        }
 
   .headerStyle{
@@ -88,24 +84,27 @@ text-align: center;
       
         width: 100%;
         border-radius: 3%;
+        
 
 }
+
 
 .overviewStyle{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        
 
         font-family: tahoma;
         margin-left: 10%;
         margin-right: 10%;
         transition: 0.5s all;
+    
 
         
 }
 .overviewStyle:hover{
      color: whitesmoke;
+    
 }
 
 
@@ -119,5 +118,13 @@ text-align: center;
         border-radius: 10px;
         padding: 1%;
 
-      
+}
+
+.LinkStyle{
+        color:red;
+        text-decoration: none;
+}
+.LinkStyle:hover{
+        color: whitesmoke;
+        text-decoration: none;
 }

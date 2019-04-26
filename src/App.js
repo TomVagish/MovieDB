@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
-import { ProgressBar,input, Button } from 'react-bootstrap';
-import Cards from './components/Card'
-import getpopular from './components/getPopular'
-import getToprated from './components/getToprated'
+import { ProgressBar} from 'react-bootstrap';
+import Cards from './components/Card';
+import getpopular from './components/getPopular';
+import getToprated from './components/getToprated';
 import './Css/App.css';
 import Navbar from './components/Navbar';
-import Routes from './Routes';
 
 
 

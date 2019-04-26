@@ -23,9 +23,19 @@
 }
 
 .mainPage{
-    padding: 3%;
+    padding: 2%;
     
     font-family: 'Courier New', Courier, monospace;
     background-color: aliceblue;
+}
+
+.avarageRate{
+    font-weight: bold;
+    color: rgb(1, 151, 1);
+}
+
+.networkLogo{
+    width: 5%;
+  
 }
 

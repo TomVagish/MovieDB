@@ -1,8 +1,7 @@
 import React from 'react';
-import {BrowserRouter, Route ,Switch,Link} from 'react-router-dom'
+import {BrowserRouter, Route ,Switch} from 'react-router-dom'
 
 import SeriesPage from '../components/SeiresPage';
-import Cards from '../components/Card'
 import App from '../App'
 
 

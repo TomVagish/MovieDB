@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {Container,Row,Col} from 'react-bootstrap';
 import '../Css/seriesPage.css';
 
 class SeriesPage extends Component {
@@ -39,28 +38,45 @@ getSeiresData(){
 
     render(){
 
-        console.log(this.state.SeiresDetails)
+    
+    const item = this.state.SeiresDetails;
+        console.log(item)
+
   
+   
         return(
 
             <div>
    <div  className="headerPage">
         
-        <img className="imgSize" src={this.state.ImagePath + this.state.SeiresDetails.poster_path} alt=""></img>
-        <h1 className="seriesName">{this.state.SeiresDetails.name}</h1>
+        <img className="imgSize" src={this.state.ImagePath + item.poster_path} alt=""></img>
+        <h1 className="seriesName">{item.name}</h1>
  
-
-         
-    
             </div>
 
 <div className="mainPage">
-<h3>overview:</h3>
-<p>{this.state.SeiresDetails.overview}</p>
+<h3><b>overview :</b></h3>
+<p>{item.overview}</p>
 <hr></hr>
-<label style={{'fontweight': 'bold'}}>First Air Date : { this.state.SeiresDetails.first_air_date}</label>
-<h5>{this.state.SeiresDetails.vote_average * 10}% love this</h5>
+<h5 className="avarageRate">{item.vote_average * 10}% loved this series</h5>
 
+<h5  >First Air Date : <b>{ item.first_air_date}</b></h5>
+<h5>Number Of Seasons : <b> {item.number_of_seasons}</b></h5>
+<h5>Number Of Episodes:  <b>{item.number_of_episodes}</b></h5>
+
+<h5>Genres :</h5>
+{item.genres ? item.genres.map(x =>
+<label> {x.name} | </label>
+
+
+
+) : null}
+<hr></hr>
+{/* <h5>Network :</h5> */}
+{item.networks ? item.networks.map(x => 
+     <img className="networkLogo" src={this.state.ImagePath + x.logo_path} alt=""></img>
+    )
+: null}
 
 
 </div>
@@ -74,7 +90,9 @@ getSeiresData(){
         )
     }
 
-}
+    }
+
+
 
 
 
