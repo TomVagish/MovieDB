@@ -19,7 +19,7 @@ async componentDidMount(){
 
     const Data = await getPopularMovies();
     this.setState({popularMovie:Data,afterfetch:true});
-    console.log(this.state.popularMovie)
+    
 }
 
     render(){

@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 class  cards extends Component{
     constructor(props) {
         super();
-        console.log(props.header);
         this.state = {
             Data:props,
             header:props.header,

@@ -58,20 +58,16 @@ text-align: center;
 }
 
 .FigureStyle{
-      
         width: 26%;
         transition: 0.5s all;
         box-shadow:   3px 3px 3px 3px #ccc;
         border-radius: 3%;
  
-           
 }
 
 .FigureStyle:hover{
-        
         cursor: pointer;
         background-color:rgb(43, 43, 43);
-      
        }
 
   .headerStyle{
@@ -83,11 +79,8 @@ text-align: center;
 
 
 .imgFigure{
-      
         width: 100%;
         border-radius: 3%;
-        
-
 }
 
 
@@ -135,3 +128,11 @@ text-align: center;
         color: whitesmoke;
         text-decoration: none;
 } 
+
+
+@media only screen and (max-width: 600px) {
+        .FigureStyle {
+         width: 100%;
+         
+        }
+      }
