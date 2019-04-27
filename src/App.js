@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ProgressBar} from 'react-bootstrap';
 import Cards from './components/Card';
 import getpopular from './components/getPopular';
-import getToprated from './components/getToprated';
+
 import './Css/App.css';
 import Navbar from './components/Navbar';
 
@@ -23,20 +23,13 @@ class App extends Component {
     }
     this.inputTodo = this.inputTodo.bind(this)
     this.Search = this.Search.bind(this);
-    this.getTopRatedTvshow = this.getTopRatedTvshow.bind(this);
+ 
   }
 
   inputTodo(event){
     this.setState({[event.target.name]: event.target.value});
  }
- 
- async getTopRatedTvshow(){
 
-  const a = await getToprated();
-  this.setState({topratedTvshow:a,afterFetchMovie:true})
-  console.log(this.state.topratedTvshow);
-
- }
 
   async componentDidMount(){
     const themostPopularTvshow = await getpopular();
@@ -60,19 +53,13 @@ class App extends Component {
   render() {
 
       return (
-        <div className="App">
-             <Navbar getTopRatedAfterClick={this.getTopRatedTvshow}></Navbar>
+        <div >
+             <Navbar ></Navbar>
       
-             {/* <SecNavBar></SecNavBar> */}
-
-             {/* <Button onClick={this.getTopRatedTvshow}>Get</Button> */}
-             {/* <input name="GeneralSearch" onChange={this.inputTodo}></input>
-             <Button onClick={this.Search}>Search</Button>
-              <h1>{this.state.GeneralSearch}</h1> */}
+     
              {this.state.afterFetchTvshow ? <Cards header={'Popular Tv Shows'} tvshow={this.state.popularTvShow}></Cards>
              : <ProgressBar animated now={100} />}
-             {this.state.afterFetchMovie ? <Cards header={'Top Rated Tv Shows'} tvshow={this.state.topratedTvshow}></Cards>
-             : <ProgressBar animated now={100} />}
+        
 
         </div>
       );

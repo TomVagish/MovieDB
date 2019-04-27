@@ -7,9 +7,27 @@
     color: whitesmoke;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+   
+}
+.LinkToAppComponent{
+  text-decoration: none;
+  color: whitesmoke;
 }
 
+.LinkToAppComponent:hover{
+  text-decoration: none;
+  color: rgb(71, 221, 231);
+}
 
+.LinkToMoviesComponent{
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.LinkToMoviesComponent:hover{
+  text-decoration: none;
+  color: rgb(71, 221, 231);
+}
 .mainreactLogo{
     width: 10vh;
     animation: App-logo-spin infinite 10s linear;      

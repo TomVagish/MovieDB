@@ -46,6 +46,7 @@ getSeiresData(){
    
         return(
 
+
             <div>
    <div  className="headerPage">
         
@@ -69,7 +70,6 @@ getSeiresData(){
 <label> {x.name} | </label>
 
 
-
 ) : null}
 <hr></hr>
 {/* <h5>Network :</h5> */}
@@ -82,11 +82,6 @@ getSeiresData(){
 </div>
             </div>
 
-         
-      
-     
-            
-           
         )
     }
 

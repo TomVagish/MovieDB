@@ -53,6 +53,7 @@ text-align: center;
         flex-wrap:wrap;
         text-align: center;
         justify-content: space-evenly;
+        background-color: whitesmoke;
        
 }
 
@@ -62,14 +63,15 @@ text-align: center;
         transition: 0.5s all;
         box-shadow:   3px 3px 3px 3px #ccc;
         border-radius: 3%;
-        
+ 
            
 }
 
 .FigureStyle:hover{
-        color: whitesmoke;
+        
         cursor: pointer;
-        background-color:rgb(61, 61, 61);
+        background-color:rgb(43, 43, 43);
+      
        }
 
   .headerStyle{
@@ -93,19 +95,24 @@ text-align: center;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
+        margin-left: 5%;
+        margin-right: 5%;
         font-family: tahoma;
-        margin-left: 10%;
-        margin-right: 10%;
-        transition: 0.5s all;
-    
-
-        
 }
-.overviewStyle:hover{
+
+
+.HeaderDateOverViewStyle{
+   transition: 0.3s all;
+      
+}
+
+      
+       
+ 
+.HeaderDateOverViewStyle:hover{
      color: whitesmoke;
     
-}
+} 
 
 
 .mainHeader{
@@ -121,10 +128,10 @@ text-align: center;
 }
 
 .LinkStyle{
-        color:red;
+  
         text-decoration: none;
 }
 .LinkStyle:hover{
         color: whitesmoke;
         text-decoration: none;
-}
+} 
