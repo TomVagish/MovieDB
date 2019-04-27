@@ -40,8 +40,8 @@ class  cards extends Component{
          <Link className="LinkStyle"  to={{
   pathname: `/SeriesPage/${item.id}`,
   state: { 
-    seiresID: item.id,
-    seiresNAME: item.name
+    DataID: item.id,
+    DataType: 'Series'
   }
 }} >
          <Figure.Image
@@ -83,8 +83,8 @@ class  cards extends Component{
          <Link className="LinkStyle"  to={{
   pathname: `/SeriesPage/${item.id}`,
   state: { 
-    seiresID: item.id,
-    seiresNAME: item.name
+    DataID: item.id,
+    DataType: 'Movie'
   }
 }} >
          <Figure.Image

@@ -6,8 +6,9 @@ constructor(props){
     super(props);
 
     this.state ={
-        SeiresID:this.props.history.location.state.seiresID,
-        SeiresDetails:[],
+        DataID:this.props.history.location.state.DataID,
+        DataDetails:[],
+        DataType: this.props.history.location.state.DataType,
         afterFetch:false,
         ImagePath:`https://image.tmdb.org/t/p/w500`
 
@@ -17,29 +18,38 @@ constructor(props){
 
  componentDidMount(){
 
-  this.getSeiresData();
- 
+    if(this.state.DataType === 'Series'){
+        this.getSeiresData();
+    }else 
+  
+    this.getMovieData();
    }
 
 
 getSeiresData(){
-
-    return fetch(`https://api.themoviedb.org/3/tv/${this.state.SeiresID}?api_key=65a51587439f13177c0c078aac743a57&language=en-US`)
+    return fetch(`https://api.themoviedb.org/3/tv/${this.state.DataID}?api_key=65a51587439f13177c0c078aac743a57&language=en-US`)
     .then(response => response.json())
-    .then(response =>  this.setState({SeiresDetails:response,afterFetch:true}))
+    .then(response =>  this.setState({DataDetails:response,afterFetch:true}))
     .catch(e =>{
         console.log(e)
     });
 
 }
 
+getMovieData(){
+    return fetch(`https://api.themoviedb.org/3/movie/${this.state.DataID}?api_key=65a51587439f13177c0c078aac743a57&language=en-US`)
+    .then(response => response.json())
+    .then(response =>  this.setState({DataDetails:response,afterFetch:true}))
+    .catch(e =>{
+        console.log(e)
+    });
 
- 
+}
 
     render(){
 
     
-    const item = this.state.SeiresDetails;
+    const item = this.state.DataDetails;
         console.log(item)
 
   
@@ -51,7 +61,9 @@ getSeiresData(){
    <div  className="headerPage">
         
         <img className="imgSize" src={this.state.ImagePath + item.poster_path} alt=""></img>
-        <h1 className="seriesName">{item.name}</h1>
+        {this.state.DataType === 'Series' ? <h1 className="seriesName">{item.name}</h1> : <h1 className="seriesName">{item.title}</h1> }
+        
+        
  
             </div>
 
@@ -59,11 +71,18 @@ getSeiresData(){
 <h3><b>overview :</b></h3>
 <p>{item.overview}</p>
 <hr></hr>
-<h5 className="avarageRate">{item.vote_average * 10}% loved this series</h5>
+{this.state.DataType === 'Series' ? <h5 className="avarageRate">{item.vote_average * 10}% loved this series</h5> : <h5 className="avarageRate">{item.vote_average * 10}% loved this movie</h5>}
 
+
+{this.state.DataType === 'Movie' ? <h5  >Release date : <b>{ item.release_date}</b></h5> :
+<div>
 <h5  >First Air Date : <b>{ item.first_air_date}</b></h5>
 <h5>Number Of Seasons : <b> {item.number_of_seasons}</b></h5>
 <h5>Number Of Episodes:  <b>{item.number_of_episodes}</b></h5>
+</div>
+}
+
+
 
 <h5>Genres :</h5>
 {item.genres ? item.genres.map(x =>
