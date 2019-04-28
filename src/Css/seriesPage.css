@@ -1,14 +1,20 @@
-.imgSize{
-    width: 30%;
-    height: 30%;
+
+
+.posterImg{
+    width: 20%;
+    margin: 2%;
+float: right;
+
+}
+.backDropImg{
     float: left;
-    margin-right: 3%;
+    margin-right: 2%;
 }
 
 .headerPage{
     background-color: #3d3d3d;
-    padding: 2%;
-
+    padding: 1%;
+  
 }
 
 .seriesName{
@@ -19,14 +25,14 @@
     padding: 1%;
     text-align: center;
  
-   
 }
 
 .mainPage{
     padding: 2%;
-    
     font-family: 'Courier New', Courier, monospace;
     background-color: aliceblue;
+    
+
 }
 
 .avarageRate{
@@ -39,3 +45,34 @@
   
 }
 
+.SeasonsStyleDiv{
+  
+  
+}
+
+
+.SeasonsseriesName{
+    color: whitesmoke;
+    text-align: center;
+    font-weight: bold;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+background-color: #3d3d3d;
+
+}
+
+.SeasonsImg{
+    width: 150px;
+    float: left;
+    margin-right: 2%;
+    
+}
+
+@media only screen and (max-width: 900px) {
+    .backDropImg{
+        
+        width:100%;
+      
+    }
+  }
