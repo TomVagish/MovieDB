@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import  { Figure } from 'react-bootstrap';
+import  { Figure, Container,Card } from 'react-bootstrap';
 import '../Css/Card.css'
 import { Link } from 'react-router-dom';
+import FigureCaption from 'react-bootstrap/FigureCaption';
 
 
 
@@ -23,6 +24,8 @@ class  cards extends Component{
         
         return (
 
+        
+
             <div >
 
             {/* check if Data is Movies or Tv show */}
@@ -34,42 +37,36 @@ class  cards extends Component{
               <hr></hr>
             <div className="divStyle">
             {this.state.Data.tvshow.results.map(item =>
-         <Figure  className="FigureStyle"  key={item.id}>
+         <Card className="FigureStyle"   key={item.id}>
     
-         <Link className="LinkStyle"  to={{
+         <Link   to={{
   pathname: `/SeriesPage/${item.id}`,
   state: { 
     DataID: item.id,
     DataType: 'Series'
   }
-}} >
-         <Figure.Image
+}}
+
+>     
+
+         <Card.Img
          className="imgFigure"
-          src={this.state.ImagePath + item.backdrop_path}
+         title={item.name}
+          src={this.state.ImagePath + item.poster_path}
           
          />
-      
      
-      <Figure.Caption >
-      <div className="HeaderDateOverViewStyle">
-
-      <h3>{item.name}</h3>
-           <h5 >{item.first_air_date}</h5>
-           <br></br>
-        
-           {item.overview === '' ? <h5>No overview available</h5> : <h5 className="overviewStyle">{item.overview}</h5>}
-
-      </div>
-        
-         
-         </Figure.Caption>
+        <div class="centered">{item.name}</div>
+  
 
          </Link> 
          
        
-       </Figure>)}
+       </Card>)}
             </div>
         </div>
+
+        // if the data is of movies start handling here
               : 
               <div>
              <hr></hr>
@@ -77,7 +74,7 @@ class  cards extends Component{
               <hr></hr>
                <div className="divStyle">
                {this.state.Data.Movies.results.map(item =>
-         <Figure  className="FigureStyle"  key={item.id}>
+         <Card  className="FigureStyle"  key={item.id}>
     
          <Link className="LinkStyle"  to={{
   pathname: `/SeriesPage/${item.id}`,
@@ -86,16 +83,20 @@ class  cards extends Component{
     DataType: 'Movie'
   }
 }} >
-         <Figure.Image
+        
+         <Card.Img
          className="imgFigure"
-          src={this.state.ImagePath + item.backdrop_path}
+          src={this.state.ImagePath + item.poster_path}
           
          />
-    
+
+<div class="centered">{item.title}</div>
+
+{/*     
       <Figure.Caption >
       <div className="HeaderDateOverViewStyle">
 
-      <h3>{item.title}</h3>
+      
            <h5 >{item.release_date}</h5>
            <br></br>
         
@@ -104,12 +105,12 @@ class  cards extends Component{
       </div>
         
          
-         </Figure.Caption>
+         </Figure.Caption> */}
 
          </Link> 
          
        
-       </Figure>)}
+       </Card>)}
        
                </div>
               </div>

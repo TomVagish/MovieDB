@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import '../Css/seriesPage.css';
-import { Spinner,Figure,Container,Col,Row,Card,Button,Jumbotron,Image } from 'react-bootstrap';
+import { Spinner,Figure} from 'react-bootstrap';
 
 class SeriesPage extends Component {
 constructor(props){
@@ -61,11 +61,13 @@ getMovieData(){
 
              
                         
-            <div  >
+            <div className="AllPage"  >
                 {this.state.afterFetch ? 
                 <div>
                      <div  className="headerPage">
+               
                      <img className="posterImg" src={this.state.ImagePath + item.poster_path} alt=""></img>
+
 
          {this.state.DataType === 'Series' ? <h1 className="seriesName">{item.name}</h1> : <h1 className="seriesName">{item.title}</h1> }
 
@@ -110,9 +112,9 @@ getMovieData(){
 
  
 {this.state.DataDetails.seasons ?  item.seasons.map(item =>
-    <div className="SeasonsStyleDiv">
+    <div key={item.id} className="SeasonsStyleDiv">
 
-       <Figure>
+       <Figure >
        <Figure.Image
        className="SeasonsImg"
          alt="171x180"
