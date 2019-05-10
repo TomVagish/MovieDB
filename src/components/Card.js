@@ -1,8 +1,7 @@
 import React,{Component} from 'react';
-import  { Figure, Container,Card } from 'react-bootstrap';
+import  { Card } from 'react-bootstrap';
 import '../Css/Card.css'
 import { Link } from 'react-router-dom';
-import FigureCaption from 'react-bootstrap/FigureCaption';
 
 
 
@@ -53,11 +52,12 @@ class  cards extends Component{
          className="imgFigure"
          title={item.name}
           src={this.state.ImagePath + item.poster_path}
-          
          />
      
-        <div class="centered">{item.name}</div>
-  
+        <div className="top">{item.name}<br></br>{item.first_air_date}<br></br> </div>
+        <div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
+
+
 
          </Link> 
          
@@ -85,27 +85,14 @@ class  cards extends Component{
 }} >
         
          <Card.Img
+         title={item.title}
          className="imgFigure"
           src={this.state.ImagePath + item.poster_path}
-          
          />
 
-<div class="centered">{item.title}</div>
 
-{/*     
-      <Figure.Caption >
-      <div className="HeaderDateOverViewStyle">
-
-      
-           <h5 >{item.release_date}</h5>
-           <br></br>
-        
-           {item.overview === '' ? <h5>No overview available</h5> : <h5 className="overviewStyle">{item.overview}</h5>}
-
-      </div>
-        
-         
-         </Figure.Caption> */}
+<div className="top">{item.title}<br></br>{item.release_date}<br></br></div>
+<div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
 
          </Link> 
          
