@@ -1,4 +1,9 @@
 
+.SeriesStyle{
+        background-color: #3d3d3d;
+       
+}
+
 
 
 
@@ -125,7 +130,7 @@
         font-weight: bold;
         font-family: 'Courier New', Courier, monospace;
        background-color: #3d3d3d;
-       filter: opacity(80%);
+       filter: opacity(70%);
 
    
       }
@@ -141,18 +146,20 @@
         font-weight: bold;
         font-family: 'Courier New', Courier, monospace;
        background-color: #3d3d3d;
-       filter: opacity(80%);
+       filter: opacity(70%);
 
       }
 
-      .overview{
+.SeriesNavStyle{
+        background-color: #dddddd;
         
-        overflow:hidden; 
-        white-space:nowrap; 
-        text-overflow: ellipsis;
-      }
+}
 
- 
+.MoviesNavStyle{
+        background-color: #dddddd;
+}
+
+
 
     
       .FigureStyle:hover .top  {

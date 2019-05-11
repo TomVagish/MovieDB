@@ -29,7 +29,7 @@
   color: rgb(71, 221, 231);
 }
 .mainreactLogo{
-    width: 10vh;
+    width: 5vh;
     animation: App-logo-spin infinite 10s linear;      
 }
 
@@ -42,3 +42,4 @@
     transform: rotate(360deg);
   }
 }
+

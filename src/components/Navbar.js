@@ -1,23 +1,37 @@
 import React,{Component} from 'react'
 import '../Css/navbar.css'
 import logo from '../logo.svg';
-import { Link } from 'react-router-dom';
+import { Navbar,Nav,NavDropdown,Form,FormControl,Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom'
+
 
 class NavBar extends Component{
 
 
+
+
+
 render(){
   return (
-    <div className="flex-container">      
+ 
+      <Navbar   bg="dark" variant="dark">
+    <img className="mainreactLogo" src={logo} alt=""></img>
+    <Nav  className="mr-auto">
+    <Link to={`/`}><Navbar.Brand>Tv shows</Navbar.Brand></Link>
+    <Link to={`/Movies`}><Navbar.Brand>Movies</Navbar.Brand></Link>
+    </Nav>
+   
 
 
-<Link className="LinkToMoviesComponent" to="/Movies"><h5 >Movies</h5></Link>
-{/* <h5 onClick={()=> this.props.getTopRatedAfterClick()}>Movies</h5>     */}
-<img className="mainreactLogo" src={logo} alt=""></img>
 
-<Link className="LinkToAppComponent" to="/" ><h5 >Tv shows</h5>  </Link>
+    <Form inline>
+      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+      <Button variant="outline-info">Search</Button>
+    </Form>
+  </Navbar>
 
- </div>
+
+
 )
 }
  
