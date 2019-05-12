@@ -32,7 +32,8 @@ class App extends Component {
 
 
   async componentDidMount(){
-    const themostPopularTvshow = await getpopular();
+    const page = 1;
+    const themostPopularTvshow = await getpopular(page);
     this.setState({popularTvShow:themostPopularTvshow,afterFetchTvshow:true})
   }
 

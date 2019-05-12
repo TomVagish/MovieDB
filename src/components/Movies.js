@@ -27,7 +27,7 @@ async componentDidMount(){
             <div>
                 <Navbar></Navbar>
                 
-                {this.state.afterfetch ? <Cards header={'Popular Movies'} Movies={this.state.popularMovie}></Cards>
+                {this.state.afterfetch ? <Cards header={'Popular Movies'} movies={this.state.popularMovie}></Cards>
              : <ProgressBar animated now={100} />}
             </div>
         )

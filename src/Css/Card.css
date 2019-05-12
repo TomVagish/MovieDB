@@ -78,17 +78,6 @@
 
 
 
-.mainHeader{
-        text-align: center;
-        font-family: tahoma;
-        color: whitesmoke ;
-        background-color: #3d3d3d;
-        margin-left:10%;
-        margin-right: 10%; 
-        border-radius: 10px;
-        padding: 1%;
-
-}
 
 
 
@@ -152,7 +141,6 @@
 
 .SeriesNavStyle{
         background-color: #dddddd;
-
 }
 
 .MoviesNavStyle{
@@ -160,8 +148,10 @@
 }
 
 
+.SecNavStyle{
+        font-weight: bold;
+}
 
-    
       .FigureStyle:hover .top  {
 	-webkit-animation: scale-in-ver-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: scale-in-ver-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
