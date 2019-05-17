@@ -58,7 +58,7 @@ class App extends Component {
              <Navbar ></Navbar>
       
      
-             {this.state.afterFetchTvshow ? <Cards header={'Popular Tv Shows'} tvshow={this.state.popularTvShow}></Cards>
+             {this.state.afterFetchTvshow ? <Cards  header={'Popular Tv Shows'} data={this.state.popularTvShow}></Cards>
              : <ProgressBar animated now={100} />}
         
 

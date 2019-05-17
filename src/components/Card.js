@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
-import  { Card,Nav,Navbar,Spinner, Button } from 'react-bootstrap';
+import  { Card,Nav,Navbar,Spinner, Button,ProgressBar } from 'react-bootstrap';
 import '../Css/Card.css'
 import { Link } from 'react-router-dom';
 import getTopRatedSeries from './getTopratedSeries';
 import getTopRatedMovies from './getTopRatedMovies';
 import getOnairSeries from './getOnairSeries';
 import getUpComingMovies from './getUpcomingMovies';
-// import getPopularseries from './getPopular';
+ import getPopularseries from './getPopular';
 
 
 
@@ -14,10 +14,11 @@ class  cards extends Component{
     constructor(props) {
         super();
         this.state = {
-            Data:props,
+            Data:props.data.results,
             header:props.header,
             progress:false,
             pageNumberToFetchData:2,
+            height:null,
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
 
@@ -27,66 +28,68 @@ class  cards extends Component{
       this.SetpopularMovies = this.SetpopularMovies.bind(this);
       this.GetOnairSeries = this.GetOnairSeries.bind(this);
       this.GetUpComingMovies = this.GetUpComingMovies.bind(this);
-      //  this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
+      this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
+      this.ScrollUp = this.ScrollUp.bind(this);
       }
 
+      componentDidMount() {
+     
+      }
 
       async GetTopRatedSeries(){
           this.setState({ progress:true});
-          const tvshow = await getTopRatedSeries();
-          const data ={tvshow};
-           this.setState({Data:data,header:'Popular Tv Shows',progress:false});
+          const TopRatedtvshow = await getTopRatedSeries();
+            this.setState({Data:TopRatedtvshow.results,header:'Popular Tv Shows',progress:false});
       }
 
       async GetTopRatedMovies(){
           this.setState({ progress:true});
-          const movies = await getTopRatedMovies();
-          const data ={movies};
-           this.setState({Data:data,header:'Popular Movies',progress:false});
+          const TopRatedmovies = await getTopRatedMovies();
+          
+           this.setState({Data:TopRatedmovies.results,header:'Popular Movies',progress:false});
       }
 
       async GetUpComingMovies(){
           this.setState({ progress:true});
-          const movies = await getUpComingMovies();
-          const data ={movies};
-           this.setState({Data:data,header:'Popular Movies',progress:false});
+          const Upcomingmovies = await getUpComingMovies();
+          
+           this.setState({Data:Upcomingmovies.results,header:'Popular Movies',progress:false});
       }
 
       async GetOnairSeries(){
         this.setState({ progress:true});
-          const tvshow = await getOnairSeries();
-          const data ={tvshow};
-           this.setState({Data:data,header:'Popular Tv Shows',progress:false});
+          const OnAirtvshow = await getOnairSeries();
+         
+           this.setState({Data:OnAirtvshow.results,header:'Popular Tv Shows',progress:false});
       }
 
       SetpopularSeries(){
-        this.setState({Data:this.props,header:this.props.header})
+        this.setState({Data:this.props.data.results,header:this.props.header})
       }
       
 
       SetpopularMovies(){
-        this.setState({Data:this.props,header:this.props.header})
+        this.setState({Data:this.props.data.results,header:this.props.header})
       }
 
-    // async  loadMorePopularSeries(){
-    //   const data = await getPopularseries(this.state.pageNumberToFetchData);
-    //   console.log(this.state.Data);
-    //     console.log([...this.state.Data.tvshow.results,...data.results])
-    //     const a = {results:[...this.state.Data.tvshow.results,...data.results]};
-    //     const b = {results:a};
-    //     console.log(b);
-    //   //  this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false});
-    //   }
+      async  loadMorePopularSeries(){
+      const data = await getPopularseries(this.state.pageNumberToFetchData);
+       this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+      }
+
+      ScrollUp(){
+        
+        window.scroll({top: 0, left: 0, behavior: 'smooth' })
+      }
       
 
       render() {
 
+
     
      
         return (
-
             <div  >
-
             {/* check if Data is Movies or Tv show */}
 
               {this.state.header === 'Popular Tv Shows' ? 
@@ -113,8 +116,8 @@ class  cards extends Component{
               
               {/* <h1 className="mainHeader">{this.state.header}</h1> */}
               
-            <div className="divStyle">
-            {this.state.Data.tvshow.results.map(item =>
+            <div  className="divStyle">
+            {this.state.Data.map(item =>
          <Card className="FigureStyle"   key={item.id}>
     
          <Link   to={{
@@ -143,8 +146,15 @@ class  cards extends Component{
        
        </Card>)}
             </div>
+            <Button onClick={this.ScrollUp} variant="warning" className="GotoTop">
+              ^
+            </Button>
             
-            {/* <Button onClick={this.loadMorePopularSeries}>Load more..</Button> */}
+            <div onClick={this.loadMorePopularSeries} className="laodMoreData">
+            Load more..
+            </div>
+            <br></br>
+            {/* <ProgressBar animated now={100} /> */}
         </div>
 
         // if the data is of movies start handling here
@@ -170,7 +180,7 @@ class  cards extends Component{
  
 </Navbar>
                <div className="divStyle">
-               {this.state.Data.movies.results.map(item =>
+               {this.state.Data.map(item =>
          <Card  className="FigureStyle"  key={item.id}>
     
          <Link   to={{
