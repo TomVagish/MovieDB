@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
-import  { Card,Nav,Navbar,Spinner, Button,ProgressBar } from 'react-bootstrap';
+import  { Card,Nav,Navbar,Spinner, Button,ProgressBar,Form,FormControl } from 'react-bootstrap';
 import '../Css/Card.css'
 import { Link } from 'react-router-dom';
-import getTopRatedSeries from './getTopratedSeries';
+import getTopratedSeries from './getTopratedSeries';
 import getTopRatedMovies from './getTopRatedMovies';
 import getOnairSeries from './getOnairSeries';
 import getUpComingMovies from './getUpcomingMovies';
@@ -18,6 +18,7 @@ class  cards extends Component{
             header:props.header,
             progress:false,
             pageNumberToFetchData:2,
+            currentSeriesNav:'popular',
             ShowHideGotoTop:'none',
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
@@ -34,6 +35,8 @@ class  cards extends Component{
       }
 
 
+
+      // handle the button that return the user to top of the page
       componentDidMount() {
         window.addEventListener('scroll', this.handleScroll, { passive: true })
       
@@ -49,9 +52,10 @@ class  cards extends Component{
   
 
       async GetTopRatedSeries(){
+        const page = 1;
           this.setState({ progress:true});
-          const TopRatedtvshow = await getTopRatedSeries();
-            this.setState({Data:TopRatedtvshow.results,header:'Popular Tv Shows',progress:false});
+          const TopRatedtvshow = await getTopratedSeries(page);
+            this.setState({Data:TopRatedtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'topRated',pageNumberToFetchData:2});
       }
 
       async GetTopRatedMovies(){
@@ -69,14 +73,14 @@ class  cards extends Component{
       }
 
       async GetOnairSeries(){
+        const page = 1;
         this.setState({ progress:true});
-          const OnAirtvshow = await getOnairSeries();
-         
-           this.setState({Data:OnAirtvshow.results,header:'Popular Tv Shows',progress:false});
+          const OnAirtvshow = await getOnairSeries(page);
+           this.setState({Data:OnAirtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'onAir',pageNumberToFetchData:2});
       }
 
       SetpopularSeries(){
-        this.setState({Data:this.props.data.results,header:this.props.header})
+        this.setState({Data:this.props.data.results,header:this.props.header,currentSeriesNav:'popular',pageNumberToFetchData:2})
       }
       
 
@@ -84,9 +88,32 @@ class  cards extends Component{
         this.setState({Data:this.props.data.results,header:this.props.header})
       }
 
+
+
       async  loadMorePopularSeries(){
-      const data = await getPopularseries(this.state.pageNumberToFetchData);
-       this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+
+
+        switch(this.state.currentSeriesNav){
+            case 'popular':
+            const data = await getPopularseries(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+            case 'topRated':
+            const TopRatedtvshow = await getTopratedSeries(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...TopRatedtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+            case 'onAir':
+            const OnAirtvshow = await getOnairSeries(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...OnAirtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+
+            default:
+            console.log('default');
+            break;
+        }
+
+
+     
       }
 
       ScrollUp(){
@@ -104,7 +131,7 @@ class  cards extends Component{
               {this.state.header === 'Popular Tv Shows' ? 
               <div  className="SeriesStyle">
                 <Navbar className="SeriesNavStyle"  sticky="top">
-                <Nav  defaultActiveKey="/"  >
+                <Nav  defaultActiveKey="/" >
   <Nav.Item>
   <Nav.Link eventKey="/" className="SecNavStyle" onClick={this.SetpopularSeries}>Most Popular</Nav.Link>
   </Nav.Item>
@@ -123,6 +150,8 @@ class  cards extends Component{
   {this.state.progress ? <Nav.Item>
   <Nav.Link > <Spinner animation="border"  size="sm"/></Nav.Link>
   </Nav.Item>: null }
+
+
  
 </Nav>    
                 </Navbar>
@@ -160,7 +189,13 @@ class  cards extends Component{
        </Card>)}
             </div>
           
-            <img style={{display:this.state.ShowHideGotoTop}} title="Go To Top" alt="" onClick={this.ScrollUp} className="GotoTop" src="https://cdn0.iconfinder.com/data/icons/flat-round-arrow-arrow-head/512/Red_Arrow_Head_Top-2-512.png"></img>
+            <img
+             style={{display:this.state.ShowHideGotoTop}}
+              title="Go To Top"
+               alt=""
+                onClick={this.ScrollUp}
+                 className="GotoTop"
+                  src="https://cdn.iconscout.com/icon/premium/png-256-thumb/go-to-top-897087.png"></img>
 
           
           
@@ -225,7 +260,13 @@ class  cards extends Component{
        </Card>)}
        
                </div>
-               <img alt="" onClick={this.ScrollUp} className="GotoTop" src="https://cdn0.iconfinder.com/data/icons/flat-round-arrow-arrow-head/512/Red_Arrow_Head_Top-2-512.png"></img>
+               <img
+             style={{display:this.state.ShowHideGotoTop}}
+              title="Go To Top"
+               alt=""
+                onClick={this.ScrollUp}
+                 className="GotoTop"
+                  src="https://cdn.iconscout.com/icon/premium/png-256-thumb/go-to-top-897087.png"></img>
 
               </div>
               }
