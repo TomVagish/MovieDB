@@ -18,7 +18,7 @@ class  cards extends Component{
             header:props.header,
             progress:false,
             pageNumberToFetchData:2,
-            height:null,
+            ShowHideGotoTop:'none',
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
 
@@ -30,11 +30,23 @@ class  cards extends Component{
       this.GetUpComingMovies = this.GetUpComingMovies.bind(this);
       this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
       this.ScrollUp = this.ScrollUp.bind(this);
+    
       }
 
+
       componentDidMount() {
-     
+        window.addEventListener('scroll', this.handleScroll, { passive: true })
+      
+        window.onscroll = function(ev) {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight/2) {
+            this.setState({ShowHideGotoTop:'block'});
+          }else{
+            this.setState({ShowHideGotoTop:'none'});
+          }
+        }.bind(this);
       }
+    
+  
 
       async GetTopRatedSeries(){
           this.setState({ progress:true});
@@ -78,37 +90,38 @@ class  cards extends Component{
       }
 
       ScrollUp(){
-        
-        window.scroll({top: 0, left: 0, behavior: 'smooth' })
+        window.scroll({top: 0, behavior: 'smooth' })
       }
-      
+
+
 
       render() {
 
-
-    
-     
         return (
-            <div  >
+            <div>
+
             {/* check if Data is Movies or Tv show */}
-
               {this.state.header === 'Popular Tv Shows' ? 
-              
-              <div className="SeriesStyle">
+              <div  className="SeriesStyle">
                 <Navbar className="SeriesNavStyle"  sticky="top">
-                <Nav   defaultActiveKey="/" variant="tabs" >
+                <Nav  defaultActiveKey="/"  >
   <Nav.Item>
+  <Nav.Link eventKey="/" className="SecNavStyle" onClick={this.SetpopularSeries}>Most Popular</Nav.Link>
+  </Nav.Item>
+  <Nav.Link > || </Nav.Link> 
+  
 
-  <Nav.Link className="SecNavStyle" onClick={this.SetpopularSeries}>  Popular Tv shows</Nav.Link>
+  <Nav.Item >
+  <Nav.Link eventKey="link-1" className="SecNavStyle" onClick={this.GetTopRatedSeries}>Top Rated</Nav.Link>
   </Nav.Item>
-  <Nav.Item className="SecNavStyle" onClick={this.GetTopRatedSeries}>
-  <Nav.Link>  Top rated Tv shows</Nav.Link>
-  </Nav.Item>
-  <Nav.Item className="SecNavStyle" onClick={this.GetOnairSeries}>
-  <Nav.Link >  Now On Tv</Nav.Link>
+  <Nav.Link > || </Nav.Link>
+
+
+  <Nav.Item >
+  <Nav.Link eventKey="link-2" className="SecNavStyle" onClick={this.GetOnairSeries}>Now On Tv</Nav.Link>
   </Nav.Item>
   {this.state.progress ? <Nav.Item>
-  <Nav.Link > <Spinner animation="border" size="sm"/></Nav.Link>
+  <Nav.Link > <Spinner animation="border"  size="sm"/></Nav.Link>
   </Nav.Item>: null }
  
 </Nav>    
@@ -116,7 +129,7 @@ class  cards extends Component{
               
               {/* <h1 className="mainHeader">{this.state.header}</h1> */}
               
-            <div  className="divStyle">
+            <div   className="divStyle">
             {this.state.Data.map(item =>
          <Card className="FigureStyle"   key={item.id}>
     
@@ -146,15 +159,16 @@ class  cards extends Component{
        
        </Card>)}
             </div>
-            <Button onClick={this.ScrollUp} variant="warning" className="GotoTop">
-              ^
-            </Button>
-            
+          
+            <img style={{display:this.state.ShowHideGotoTop}} title="Go To Top" alt="" onClick={this.ScrollUp} className="GotoTop" src="https://cdn0.iconfinder.com/data/icons/flat-round-arrow-arrow-head/512/Red_Arrow_Head_Top-2-512.png"></img>
+
+          
+          
             <div onClick={this.loadMorePopularSeries} className="laodMoreData">
             Load more..
             </div>
             <br></br>
-            {/* <ProgressBar animated now={100} /> */}
+           
         </div>
 
         // if the data is of movies start handling here
@@ -162,16 +176,20 @@ class  cards extends Component{
               <div className="SeriesStyle">
 
 <Navbar className="MoviesNavStyle" sticky="top">
-<Nav     variant="tabs" defaultActiveKey="/">
+<Nav  defaultActiveKey="/">
   <Nav.Item >
 
-  <Nav.Link className="SecNavStyle" onClick={this.SetpopularMovies}>  Popular Movies</Nav.Link>
+  <Nav.Link eventKey="/" className="SecNavStyle" onClick={this.SetpopularMovies}>Most Popular</Nav.Link>
   </Nav.Item>
+   <Nav.Link > || </Nav.Link>
+
   <Nav.Item >
-  <Nav.Link className="SecNavStyle" onClick={this.GetTopRatedMovies}>  Top Rated  Movies</Nav.Link>
+  <Nav.Link eventKey="link-1" className="SecNavStyle" onClick={this.GetTopRatedMovies}>Top Rated</Nav.Link>
   </Nav.Item>
+ <Nav.Link > || </Nav.Link> 
+
   <Nav.Item>
-  <Nav.Link className="SecNavStyle" onClick={this.GetUpComingMovies}>  Upcoming..</Nav.Link>
+  <Nav.Link eventKey="link-2" className="SecNavStyle" onClick={this.GetUpComingMovies}>Upcoming..</Nav.Link>
   </Nav.Item>
   {this.state.progress ? <Nav.Item>
   <Nav.Link > <Spinner animation="border" size="sm" /></Nav.Link>
@@ -207,6 +225,8 @@ class  cards extends Component{
        </Card>)}
        
                </div>
+               <img alt="" onClick={this.ScrollUp} className="GotoTop" src="https://cdn0.iconfinder.com/data/icons/flat-round-arrow-arrow-head/512/Red_Arrow_Head_Top-2-512.png"></img>
+
               </div>
               }
            

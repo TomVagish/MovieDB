@@ -16,9 +16,10 @@ render(){
  
       <Navbar    bg="dark" variant="dark">
     <img className="mainreactLogo" src={logo} alt=""></img>
-    <Nav    className="mr-auto">
-    <Link to={`/`}><Navbar.Brand  >Tv shows</Navbar.Brand></Link>
-    <Link to={`/Movies`}><Navbar.Brand >Movies</Navbar.Brand></Link>
+    <Nav   defaultActiveKey="/" className="mr-auto">
+
+    <Link className="SecNavStyle" to={`/`}><Navbar.Brand>Tv shows</Navbar.Brand></Link>
+    <Link className="SecNavStyle" to={`/Movies`}><Navbar.Brand >Movies</Navbar.Brand></Link>
     </Nav>
    
 
