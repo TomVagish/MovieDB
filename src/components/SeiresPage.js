@@ -5,13 +5,12 @@ import { Spinner,Figure} from 'react-bootstrap';
 class SeriesPage extends Component {
 constructor(props){
     super(props);
-    var seriesData = localStorage.getItem('SeriesData');
-    var SeriesDataParse = JSON.parse(seriesData);
+  
 
     this.state ={
-        DataID:SeriesDataParse.DataID,
+        DataID:this.props.history.location.state.DataID,
         DataDetails:[],
-        DataType: SeriesDataParse.DataType,
+        DataType: this.props.history.location.state.DataType,
         afterFetch:false,
         ImagePath:`https://image.tmdb.org/t/p/w500`
 
@@ -21,9 +20,6 @@ constructor(props){
 
  componentDidMount(){
 
-  
-  
-    
     if(this.state.DataType === 'Series'){
         this.getSeiresData();
     }else 

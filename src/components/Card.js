@@ -35,7 +35,6 @@ class  cards extends Component{
       this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
       this.loadMorePopularMovies = this.loadMorePopularMovies.bind(this);
       this.ScrollUp = this.ScrollUp.bind(this);
-      this.saveInLocalStorage = this.saveInLocalStorage.bind(this);
     
       }
 
@@ -55,10 +54,7 @@ class  cards extends Component{
       }
     
 
-      saveInLocalStorage(Data){
-        localStorage.setItem('SeriesData', JSON.stringify(Data));
-       }
-  
+ 
 
       async GetTopRatedSeries(){
         const page = 1;
@@ -192,10 +188,10 @@ class  cards extends Component{
             {this.state.Data.map(item =>
          <Card className="FigureStyle"   key={item.id}>
     
-         <Link target="_blank" onClick={() =>this.saveInLocalStorage({   DataID: item.id,  DataType: 'Series'})}
+         <Link
            to={{
-  pathname: `/SeriesPage/${item.id}`
-
+  pathname: `/SeriesPage/${item.id}`,
+state:{   DataID: item.id,  DataType: 'Series'}
 }}
 
 >     
@@ -275,8 +271,9 @@ class  cards extends Component{
                {this.state.Data.map(item =>
          <Card  className="FigureStyle"  key={item.id}>
     
-         <Link target="_blank" onClick={() =>this.saveInLocalStorage({   DataID: item.id,  DataType: 'Movie'})}  to={{
-  pathname: `/SeriesPage/${item.id}`}} >
+         <Link   to={{
+  pathname: `/SeriesPage/${item.id}`,
+  state:{   DataID: item.id,  DataType: 'Movie'}}} >
         
         {item.poster_path ? 
    <Card.Img
