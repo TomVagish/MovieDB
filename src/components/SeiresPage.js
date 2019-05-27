@@ -5,11 +5,13 @@ import { Spinner,Figure} from 'react-bootstrap';
 class SeriesPage extends Component {
 constructor(props){
     super(props);
+    var seriesData = localStorage.getItem('SeriesData');
+    var SeriesDataParse = JSON.parse(seriesData);
 
     this.state ={
-        DataID:this.props.history.location.state.DataID,
+        DataID:SeriesDataParse.DataID,
         DataDetails:[],
-        DataType: this.props.history.location.state.DataType,
+        DataType: SeriesDataParse.DataType,
         afterFetch:false,
         ImagePath:`https://image.tmdb.org/t/p/w500`
 
@@ -19,6 +21,9 @@ constructor(props){
 
  componentDidMount(){
 
+  
+  
+    
     if(this.state.DataType === 'Series'){
         this.getSeiresData();
     }else 
@@ -111,15 +116,24 @@ getMovieData(){
  {this.state.DataType === 'Series' ? <h1 className="SeasonsseriesName">{item.name} Seasons</h1> : null }
 
  
-{this.state.DataDetails.seasons ?  item.seasons.map(item =>
+{this.state.DataDetails.seasons ?  item.seasons.map((item,index) =>
     <div key={item.id} className="SeasonsStyleDiv">
 
        <Figure >
-       <Figure.Image
+          
+           {item.poster_path ?   <Figure.Image
        className="SeasonsImg"
          alt="171x180"
          src={this.state.ImagePath + item.poster_path}
        />
+       :
+       <Figure.Image
+       className="SeasonsImg"
+         alt="171x180"
+         src="https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+       />
+        }
+     
        <Figure.Caption>
          <h3><b>{item.name}</b></h3>
          <h5><b>First air date :</b> {item.air_date}</h5>
@@ -134,7 +148,11 @@ getMovieData(){
 
  </div>
                 </div>
-                : <Spinner  animation="border" variant="primary" />}
+                : <div>
+              <Spinner animation="grow" variant="secondary" />
+            <Spinner animation="grow" variant="success" />
+          <Spinner animation="grow" variant="danger" />
+                </div>}
   
             </div>
 

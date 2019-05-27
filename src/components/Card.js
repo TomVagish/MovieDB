@@ -7,6 +7,8 @@ import getTopRatedMovies from './getTopRatedMovies';
 import getOnairSeries from './getOnairSeries';
 import getUpComingMovies from './getUpcomingMovies';
  import getPopularseries from './getPopular';
+import getPopularMovies from './getPopularMovies';
+
 
 
 
@@ -19,6 +21,7 @@ class  cards extends Component{
             progress:false,
             pageNumberToFetchData:2,
             currentSeriesNav:'popular',
+            currentmoviesNav:'popular',
             ShowHideGotoTop:'none',
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
@@ -30,7 +33,9 @@ class  cards extends Component{
       this.GetOnairSeries = this.GetOnairSeries.bind(this);
       this.GetUpComingMovies = this.GetUpComingMovies.bind(this);
       this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
+      this.loadMorePopularMovies = this.loadMorePopularMovies.bind(this);
       this.ScrollUp = this.ScrollUp.bind(this);
+      this.saveInLocalStorage = this.saveInLocalStorage.bind(this);
     
       }
 
@@ -49,6 +54,10 @@ class  cards extends Component{
         }.bind(this);
       }
     
+
+      saveInLocalStorage(Data){
+        localStorage.setItem('SeriesData', JSON.stringify(Data));
+       }
   
 
       async GetTopRatedSeries(){
@@ -59,17 +68,19 @@ class  cards extends Component{
       }
 
       async GetTopRatedMovies(){
+        const page =1 
           this.setState({ progress:true});
-          const TopRatedmovies = await getTopRatedMovies();
+          const TopRatedmovies = await getTopRatedMovies(page);
           
-           this.setState({Data:TopRatedmovies.results,header:'Popular Movies',progress:false});
+           this.setState({Data:TopRatedmovies.results,currentmoviesNav:'topRated',progress:false,pageNumberToFetchData:2});
       }
 
       async GetUpComingMovies(){
           this.setState({ progress:true});
-          const Upcomingmovies = await getUpComingMovies();
+          const page=1;
+          const Upcomingmovies = await getUpComingMovies(page);
           
-           this.setState({Data:Upcomingmovies.results,header:'Popular Movies',progress:false});
+           this.setState({Data:Upcomingmovies.results,currentmoviesNav:'upcoming',progress:false,pageNumberToFetchData:2});
       }
 
       async GetOnairSeries(){
@@ -85,13 +96,12 @@ class  cards extends Component{
       
 
       SetpopularMovies(){
-        this.setState({Data:this.props.data.results,header:this.props.header})
+        this.setState({Data:this.props.data.results,header:this.props.header,currentmoviesNav:'popular',pageNumberToFetchData:2})
       }
 
 
 
       async  loadMorePopularSeries(){
-
 
         switch(this.state.currentSeriesNav){
             case 'popular':
@@ -111,9 +121,29 @@ class  cards extends Component{
             console.log('default');
             break;
         }
+      }
 
 
-     
+      async  loadMorePopularMovies(){
+
+        switch(this.state.currentmoviesNav){
+            case 'popular':
+            const data = await getPopularMovies(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...data.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+            case 'topRated':
+            const TopRatedMovies = await getTopRatedMovies(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...TopRatedMovies.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+            case 'upcoming':
+            const upcomingMovies = await getUpComingMovies(this.state.pageNumberToFetchData);
+            this.setState({Data:[...this.state.Data,...upcomingMovies.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            break;
+
+            default:
+            console.log('default');
+            break;
+        }
       }
 
       ScrollUp(){
@@ -162,21 +192,27 @@ class  cards extends Component{
             {this.state.Data.map(item =>
          <Card className="FigureStyle"   key={item.id}>
     
-         <Link   to={{
-  pathname: `/SeriesPage/${item.id}`,
-  state: { 
-    DataID: item.id,
-    DataType: 'Series'
-  }
+         <Link target="_blank" onClick={() =>this.saveInLocalStorage({   DataID: item.id,  DataType: 'Series'})}
+           to={{
+  pathname: `/SeriesPage/${item.id}`
+
 }}
 
 >     
 
-         <Card.Img
-         className="imgFigure"
-         title={item.name}
-          src={this.state.ImagePath + item.poster_path}
-         />
+         {item.poster_path ? 
+   <Card.Img
+   title={item.name}
+   className="imgFigure"
+    src={this.state.ImagePath + item.poster_path}
+   />
+        :
+        <Card.Img
+        title={item.name}
+        className="imgFigure"
+         src="https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+        />
+        }
      
         <div className="top">{item.name}<br></br>{item.first_air_date}<br></br> </div>
         <div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
@@ -199,9 +235,12 @@ class  cards extends Component{
 
           
           
-            <div onClick={this.loadMorePopularSeries} className="laodMoreData">
+        
+          <div onClick={this.loadMorePopularSeries} className="laodMoreData">
             Load more..
             </div>
+          
+           
             <br></br>
            
         </div>
@@ -236,19 +275,23 @@ class  cards extends Component{
                {this.state.Data.map(item =>
          <Card  className="FigureStyle"  key={item.id}>
     
-         <Link   to={{
-  pathname: `/SeriesPage/${item.id}`,
-  state: { 
-    DataID: item.id,
-    DataType: 'Movie'
-  }
-}} >
+         <Link target="_blank" onClick={() =>this.saveInLocalStorage({   DataID: item.id,  DataType: 'Movie'})}  to={{
+  pathname: `/SeriesPage/${item.id}`}} >
         
-         <Card.Img
-         title={item.title}
-         className="imgFigure"
-          src={this.state.ImagePath + item.poster_path}
-         />
+        {item.poster_path ? 
+   <Card.Img
+   title={item.title}
+   className="imgFigure"
+    src={this.state.ImagePath + item.poster_path}
+   />
+        :
+        <Card.Img
+        title={item.title}
+        className="imgFigure"
+         src="https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+        />
+        }
+      
 
 
 <div className="top">{item.title}<br></br>{item.release_date}<br></br></div>
@@ -268,10 +311,14 @@ class  cards extends Component{
                  className="GotoTop"
                   src="https://cdn.iconscout.com/icon/premium/png-256-thumb/go-to-top-897087.png"></img>
 
+<div onClick={this.loadMorePopularMovies} className="laodMoreData">
+            Load more..
+            </div>
               </div>
+              
               }
            
-      
+         
         </div>
         
         );

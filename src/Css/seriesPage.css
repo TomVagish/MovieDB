@@ -9,10 +9,6 @@ transition: 0.5s all;
 
 }
 
-.posterImg:hover{
-
-}
-
 
 
 .backDropImg{
@@ -33,13 +29,14 @@ transition: 0.5s all;
     font-size: 50px;
     padding: 1%;
     text-align: center;
+    
 
 }
 
 .mainPage{
     padding: 2%;
     font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
+    background-color: whitesmoke;
     
 
 }
@@ -54,10 +51,7 @@ transition: 0.5s all;
   
 }
 
-.SeasonsStyleDiv{
-  
-  
-}
+
 
 
 .SeasonsseriesName{
@@ -73,10 +67,12 @@ background-color: #3d3d3d;
 
 .SeasonsImg{
     width: 150px;
-    float: left;
     margin-right: 2%;
-    
+    float: left;
+     
 }
+
+
 
 @media only screen and (max-width: 900px) {
     .backDropImg{
