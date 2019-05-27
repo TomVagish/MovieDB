@@ -8,10 +8,7 @@ import getOnairSeries from './getOnairSeries';
 import getUpComingMovies from './getUpcomingMovies';
  import getPopularseries from './getPopular';
 import getPopularMovies from './getPopularMovies';
-
-
-
-
+import Pagination from "react-js-pagination";
 class  cards extends Component{
     constructor(props) {
         super();
@@ -26,6 +23,8 @@ class  cards extends Component{
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
 
+
+
       this.GetTopRatedSeries = this.GetTopRatedSeries.bind(this);
       this.GetTopRatedMovies = this.GetTopRatedMovies.bind(this);
       this.SetpopularSeries = this.SetpopularSeries.bind(this);
@@ -38,7 +37,10 @@ class  cards extends Component{
     
       }
 
-
+      handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        
+      }
 
       // handle the button that return the user to top of the page
       componentDidMount() {
@@ -97,12 +99,13 @@ class  cards extends Component{
 
 
 
-      async  loadMorePopularSeries(){
-
+      async  loadMorePopularSeries(pageNumber){
+        
         switch(this.state.currentSeriesNav){
             case 'popular':
-            const data = await getPopularseries(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const data = await getPopularseries(pageNumber);
+            console.log(data)
+            this.setState({Data:[...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
             break;
             case 'topRated':
             const TopRatedtvshow = await getTopratedSeries(this.state.pageNumberToFetchData);
@@ -147,8 +150,8 @@ class  cards extends Component{
       }
 
 
-
       render() {
+
 
         return (
             <div>
@@ -232,13 +235,22 @@ state:{   DataID: item.id,  DataType: 'Series'}
           
           
         
-          <div onClick={this.loadMorePopularSeries} className="laodMoreData">
-            Load more..
+          <div  className="laodMoreData">
+            <Pagination
+            
+            activePage={this.state.pageNumberToFetchData}
+            itemsCountPerPage={10}
+            totalItemsCount={450}
+            pageRangeDisplayed={10}
+            onChange={this.loadMorePopularSeries}
+          />
+             
             </div>
-          
-           
+
+       
+     
             <br></br>
-           
+            
         </div>
 
         // if the data is of movies start handling here
