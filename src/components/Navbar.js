@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import '../Css/navbar.css'
 import logo from '../logo.svg';
-import { Navbar,Nav,Form,FormControl,Button,Modal } from 'react-bootstrap';
+import { Navbar,Nav,Button,Modal } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 import search from './search';
 

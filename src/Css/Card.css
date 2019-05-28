@@ -316,12 +316,8 @@
       
       .laodMoreData{
                        
-              text-align: center;
-              font-family: 'Courier New', Courier, monospace;
-              font-weight: bold;
-              color: whitesmoke;
-              transition: 0.2s all;
-              font-size: 2em;
+            margin-left: 40%;
+            margin-right: 40%;
       }
 
       .laodMoreData:hover{

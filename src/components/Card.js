@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import  { Card,Nav,Navbar,Spinner, Button,ProgressBar,Form,FormControl } from 'react-bootstrap';
+import  { Card,Nav,Navbar,Spinner,Pagination} from 'react-bootstrap';
 import '../Css/Card.css'
 import { Link } from 'react-router-dom';
 import getTopratedSeries from './getTopratedSeries';
@@ -16,10 +16,11 @@ class  cards extends Component{
     constructor(props) {
         super();
         this.state = {
+        
             Data:props.data.results,
             header:props.header,
             progress:false,
-            pageNumberToFetchData:2,
+            pageNumberToFetchData:1,
             currentSeriesNav:'popular',
             currentmoviesNav:'popular',
             ShowHideGotoTop:'none',
@@ -35,13 +36,28 @@ class  cards extends Component{
       this.loadMorePopularSeries = this.loadMorePopularSeries.bind(this);
       this.loadMorePopularMovies = this.loadMorePopularMovies.bind(this);
       this.ScrollUp = this.ScrollUp.bind(this);
+      this.setInLocalStorage = this.setInLocalStorage.bind(this);
     
       }
 
 
 
-      // handle the button that return the user to top of the page
+      
       componentDidMount() {
+
+        var pageNumberAndSection = localStorage.getItem('pageNumberAndSection');
+         const data = JSON.parse(pageNumberAndSection);
+        if(data !== null){
+          this.setState({currentSeriesNav:data.section});
+      
+          this.loadMorePopularSeries(data.pageNumber);
+        }
+      
+        this.checkIfscroll();
+      }
+
+    // handle the button that return the user to top of the page
+      checkIfscroll(){
         window.addEventListener('scroll', this.handleScroll, { passive: true })
       
         window.onscroll = function(ev) {
@@ -52,15 +68,20 @@ class  cards extends Component{
           }
         }.bind(this);
       }
-    
 
+
+      setInLocalStorage(){
+       
+        var pageNumberAndSection = { pageNumber: this.state.pageNumberToFetchData, section: this.state.currentSeriesNav };
+        localStorage.setItem('pageNumberAndSection', JSON.stringify(pageNumberAndSection));
+      }
  
 
       async GetTopRatedSeries(){
         const page = 1;
           this.setState({ progress:true});
           const TopRatedtvshow = await getTopratedSeries(page);
-            this.setState({Data:TopRatedtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'topRated',pageNumberToFetchData:2});
+            this.setState({Data:TopRatedtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'topRated',pageNumberToFetchData:1});
       }
 
       async GetTopRatedMovies(){
@@ -68,7 +89,7 @@ class  cards extends Component{
           this.setState({ progress:true});
           const TopRatedmovies = await getTopRatedMovies(page);
           
-           this.setState({Data:TopRatedmovies.results,currentmoviesNav:'topRated',progress:false,pageNumberToFetchData:2});
+           this.setState({Data:TopRatedmovies.results,currentmoviesNav:'topRated',progress:false,pageNumberToFetchData:1});
       }
 
       async GetUpComingMovies(){
@@ -76,41 +97,41 @@ class  cards extends Component{
           const page=1;
           const Upcomingmovies = await getUpComingMovies(page);
           
-           this.setState({Data:Upcomingmovies.results,currentmoviesNav:'upcoming',progress:false,pageNumberToFetchData:2});
+           this.setState({Data:Upcomingmovies.results,currentmoviesNav:'upcoming',progress:false,pageNumberToFetchData:1});
       }
 
       async GetOnairSeries(){
         const page = 1;
         this.setState({ progress:true});
           const OnAirtvshow = await getOnairSeries(page);
-           this.setState({Data:OnAirtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'onAir',pageNumberToFetchData:2});
+           this.setState({Data:OnAirtvshow.results,header:'Popular Tv Shows',progress:false,currentSeriesNav:'onAir',pageNumberToFetchData:1});
       }
 
       SetpopularSeries(){
-        this.setState({Data:this.props.data.results,header:this.props.header,currentSeriesNav:'popular',pageNumberToFetchData:2})
+        this.setState({Data:this.props.data.results,header:this.props.header,currentSeriesNav:'popular',pageNumberToFetchData:1})
       }
       
 
       SetpopularMovies(){
-        this.setState({Data:this.props.data.results,header:this.props.header,currentmoviesNav:'popular',pageNumberToFetchData:2})
+        this.setState({Data:this.props.data.results,header:this.props.header,currentmoviesNav:'popular',pageNumberToFetchData:1})
       }
 
 
 
-      async  loadMorePopularSeries(){
+      async  loadMorePopularSeries(pageNumber){
 
         switch(this.state.currentSeriesNav){
             case 'popular':
-            const data = await getPopularseries(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const data = await getPopularseries(pageNumber);
+            this.setState({Data:[...data.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:pageNumber});
             break;
             case 'topRated':
-            const TopRatedtvshow = await getTopratedSeries(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...TopRatedtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const TopRatedtvshow = await getTopratedSeries(pageNumber);
+            this.setState({Data:[...TopRatedtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:pageNumber});
             break;
             case 'onAir':
-            const OnAirtvshow = await getOnairSeries(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...OnAirtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const OnAirtvshow = await getOnairSeries(pageNumber);
+            this.setState({Data:[...OnAirtvshow.results],header:'Popular Tv Shows',progress:false,pageNumberToFetchData:pageNumber});
             break;
 
             default:
@@ -120,20 +141,20 @@ class  cards extends Component{
       }
 
 
-      async  loadMorePopularMovies(){
+      async  loadMorePopularMovies(pageNumber){
 
         switch(this.state.currentmoviesNav){
             case 'popular':
-            const data = await getPopularMovies(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...data.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const data = await getPopularMovies(pageNumber);
+            this.setState({Data:[...this.state.Data,...data.results],progress:false,pageNumberToFetchData:pageNumber});
             break;
             case 'topRated':
-            const TopRatedMovies = await getTopRatedMovies(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...TopRatedMovies.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const TopRatedMovies = await getTopRatedMovies(pageNumber);
+            this.setState({Data:[...this.state.Data,...TopRatedMovies.results],progress:false,pageNumberToFetchData:pageNumber});
             break;
             case 'upcoming':
-            const upcomingMovies = await getUpComingMovies(this.state.pageNumberToFetchData);
-            this.setState({Data:[...this.state.Data,...upcomingMovies.results],progress:false,pageNumberToFetchData:this.state.pageNumberToFetchData+1});
+            const upcomingMovies = await getUpComingMovies(pageNumber);
+            this.setState({Data:[...this.state.Data,...upcomingMovies.results],progress:false,pageNumberToFetchData:pageNumber});
             break;
 
             default:
@@ -147,12 +168,24 @@ class  cards extends Component{
       }
 
 
+     
+
 
       render() {
 
+        let active = this.state.pageNumberToFetchData;
+        let items = [];
+        for (let number = 1; number <= 10; number++) {
+          items.push(
+            <Pagination.Item onClick={()=> this.loadMorePopularSeries(number)} key={number} active={number === active}>
+              {number}
+            </Pagination.Item>,
+          );
+        }
+
+
         return (
             <div>
-
             {/* check if Data is Movies or Tv show */}
               {this.state.header === 'Popular Tv Shows' ? 
               <div  className="SeriesStyle">
@@ -189,6 +222,7 @@ class  cards extends Component{
          <Card className="FigureStyle"   key={item.id}>
     
          <Link
+         onClick={this.setInLocalStorage}
            to={{
   pathname: `/SeriesPage/${item.id}`,
 state:{   DataID: item.id,  DataType: 'Series'}
@@ -232,8 +266,9 @@ state:{   DataID: item.id,  DataType: 'Series'}
           
           
         
-          <div onClick={this.loadMorePopularSeries} className="laodMoreData">
-            Load more..
+          <div  className="laodMoreData">
+            <hr></hr>
+          <Pagination >{items}</Pagination>
             </div>
           
            
@@ -271,7 +306,7 @@ state:{   DataID: item.id,  DataType: 'Series'}
                {this.state.Data.map(item =>
          <Card  className="FigureStyle"  key={item.id}>
     
-         <Link   to={{
+         <Link  onClick={this.setInLocalStorage} to={{
   pathname: `/SeriesPage/${item.id}`,
   state:{   DataID: item.id,  DataType: 'Movie'}}} >
         
@@ -307,10 +342,16 @@ state:{   DataID: item.id,  DataType: 'Series'}
                 onClick={this.ScrollUp}
                  className="GotoTop"
                   src="https://cdn.iconscout.com/icon/premium/png-256-thumb/go-to-top-897087.png"></img>
-
-<div onClick={this.loadMorePopularMovies} className="laodMoreData">
-            Load more..
+   
+   <div  className="laodMoreData">
+            <hr></hr>
+          <Pagination size="sm">{items}</Pagination>
             </div>
+          
+           
+            <br></br>
+           
+
               </div>
               
               }
