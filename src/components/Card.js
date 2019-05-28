@@ -15,8 +15,9 @@ import getPopularMovies from './getPopularMovies';
 class  cards extends Component{
     constructor(props) {
         super();
+    
         this.state = {
-        
+            Navflag:true,
             Data:props.data.results,
             header:props.header,
             progress:false,
@@ -48,9 +49,15 @@ class  cards extends Component{
         var pageNumberAndSection = localStorage.getItem('pageNumberAndSection');
          const data = JSON.parse(pageNumberAndSection);
         if(data !== null){
-          this.setState({currentSeriesNav:data.section});
-      
-          this.loadMorePopularSeries(data.pageNumber);
+          this.setState({Navflag:false})
+         this.setState({currentSeriesNav:data.section})
+         
+        setTimeout(() =>{
+          if(this.state.Navflag === false){
+            this.setState({Navflag:true})
+            this.loadMorePopularSeries(data.pageNumber);
+           }
+        },0)
         }
       
         this.checkIfscroll();
@@ -187,33 +194,34 @@ class  cards extends Component{
         return (
             <div>
             {/* check if Data is Movies or Tv show */}
+            
               {this.state.header === 'Popular Tv Shows' ? 
               <div  className="SeriesStyle">
-                <Navbar className="SeriesNavStyle"  sticky="top">
-                <Nav  defaultActiveKey="/" >
-  <Nav.Item>
-  <Nav.Link eventKey="/" className="SecNavStyle" onClick={this.SetpopularSeries}>Most Popular</Nav.Link>
-  </Nav.Item>
-  <Nav.Link > || </Nav.Link> 
-  
-
-  <Nav.Item >
-  <Nav.Link eventKey="link-1" className="SecNavStyle" onClick={this.GetTopRatedSeries}>Top Rated</Nav.Link>
-  </Nav.Item>
-  <Nav.Link > || </Nav.Link>
-
-
-  <Nav.Item >
-  <Nav.Link eventKey="link-2" className="SecNavStyle" onClick={this.GetOnairSeries}>Now On Tv</Nav.Link>
-  </Nav.Item>
-  {this.state.progress ? <Nav.Item>
-  <Nav.Link > <Spinner animation="border"  size="sm"/></Nav.Link>
-  </Nav.Item>: null }
-
-
- 
-</Nav>    
-                </Navbar>
+          {this.state.Navflag ?
+                   
+                   <Navbar className="SeriesNavStyle"  sticky="top">
+                   <Nav  defaultActiveKey={this.state.currentSeriesNav} >
+     <Nav.Item>
+     <Nav.Link eventKey="popular" className="SecNavStyle" onClick={this.SetpopularSeries}>Most Popular</Nav.Link>
+     </Nav.Item>
+     <Nav.Link > || </Nav.Link> 
+     
+   
+     <Nav.Item >
+     <Nav.Link eventKey="topRated" className="SecNavStyle" onClick={this.GetTopRatedSeries}>Top Rated</Nav.Link>
+     </Nav.Item>
+     <Nav.Link > || </Nav.Link>
+   
+   
+     <Nav.Item >
+     <Nav.Link eventKey="onAir" className="SecNavStyle" onClick={this.GetOnairSeries}>Now On Tv</Nav.Link>
+     </Nav.Item>
+     {this.state.progress ? <Nav.Item>
+     <Nav.Link > <Spinner animation="border"  size="sm"/></Nav.Link>
+     </Nav.Item>: null }
+   </Nav>    
+                   </Navbar> :null
+                  }
               
               {/* <h1 className="mainHeader">{this.state.header}</h1> */}
               
