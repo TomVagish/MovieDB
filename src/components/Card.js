@@ -15,15 +15,34 @@ import getPopularMovies from './getPopularMovies';
 class  cards extends Component{
     constructor(props) {
         super();
+
+        var sectionNav = 'popular';
+        var pageNumber = 1;
+        var pageNumberAndSection = localStorage.getItem('pageNumberAndSection');
+        const data = JSON.parse(pageNumberAndSection);
+        if(data !== null){
+          sectionNav = data.section;
+          pageNumber = data.pageNumber;
+        }
+
+        var sectionNav2 = 'popular';
+        var pageNumber2 = 1;
+        var pageNumberAndSection2 = localStorage.getItem('pageNumberAndSection2');
+        const data2 = JSON.parse(pageNumberAndSection2);
+        if(data2 !== null){
+          sectionNav2 = data2.section;
+          pageNumber2 = data2.pageNumber;
+        }
     
         this.state = {
-            Navflag:true,
+           
             Data:props.data.results,
             header:props.header,
             progress:false,
-            pageNumberToFetchData:1,
-            currentSeriesNav:'popular',
-            currentmoviesNav:'popular',
+            pageNumberToFetchData:pageNumber,
+            pageNumberToFetchData2:pageNumber2,
+            currentSeriesNav:sectionNav,
+            currentmoviesNav:sectionNav2,
             ShowHideGotoTop:'none',
         ImagePath:`https://image.tmdb.org/t/p/w500/`
         };
@@ -38,6 +57,7 @@ class  cards extends Component{
       this.loadMorePopularMovies = this.loadMorePopularMovies.bind(this);
       this.ScrollUp = this.ScrollUp.bind(this);
       this.setInLocalStorage = this.setInLocalStorage.bind(this);
+      this.setInLocalStorage2 = this.setInLocalStorage2.bind(this);
     
       }
 
@@ -45,21 +65,22 @@ class  cards extends Component{
 
       
       componentDidMount() {
+       
+        // claer Localstorage after close tab/browser
+        window.onbeforeunload = function () {
+          localStorage.removeItem('pageNumberAndSection');
+          localStorage.removeItem('pageNumberAndSection2');
+      };
 
-        var pageNumberAndSection = localStorage.getItem('pageNumberAndSection');
-         const data = JSON.parse(pageNumberAndSection);
-        if(data !== null){
-          this.setState({Navflag:false})
-         this.setState({currentSeriesNav:data.section})
-         
-        setTimeout(() =>{
-          if(this.state.Navflag === false){
-            this.setState({Navflag:true})
-            this.loadMorePopularSeries(data.pageNumber);
-           }
-        },0)
-        }
-      
+      // check wich to reload, series or movies
+      if(this.state.header === 'Popular Tv Shows'){
+        this.loadMorePopularSeries(this.state.pageNumberToFetchData);
+
+      }else{
+        this.loadMorePopularMovies(this.state.pageNumberToFetchData2);
+
+      }
+
         this.checkIfscroll();
       }
 
@@ -83,6 +104,12 @@ class  cards extends Component{
         localStorage.setItem('pageNumberAndSection', JSON.stringify(pageNumberAndSection));
       }
  
+      setInLocalStorage2(){
+       
+        var pageNumberAndSection2 = { pageNumber: this.state.pageNumberToFetchData2, section: this.state.currentmoviesNav };
+        localStorage.setItem('pageNumberAndSection2', JSON.stringify(pageNumberAndSection2));
+      }
+ 
 
       async GetTopRatedSeries(){
         const page = 1;
@@ -96,7 +123,7 @@ class  cards extends Component{
           this.setState({ progress:true});
           const TopRatedmovies = await getTopRatedMovies(page);
           
-           this.setState({Data:TopRatedmovies.results,currentmoviesNav:'topRated',progress:false,pageNumberToFetchData:1});
+           this.setState({Data:TopRatedmovies.results,currentmoviesNav:'topRated',progress:false,pageNumberToFetchData2:1});
       }
 
       async GetUpComingMovies(){
@@ -104,7 +131,7 @@ class  cards extends Component{
           const page=1;
           const Upcomingmovies = await getUpComingMovies(page);
           
-           this.setState({Data:Upcomingmovies.results,currentmoviesNav:'upcoming',progress:false,pageNumberToFetchData:1});
+           this.setState({Data:Upcomingmovies.results,currentmoviesNav:'upcoming',progress:false,pageNumberToFetchData2:1});
       }
 
       async GetOnairSeries(){
@@ -120,13 +147,13 @@ class  cards extends Component{
       
 
       SetpopularMovies(){
-        this.setState({Data:this.props.data.results,header:this.props.header,currentmoviesNav:'popular',pageNumberToFetchData:1})
+        this.setState({Data:this.props.data.results,header:this.props.header,currentmoviesNav:'popular',pageNumberToFetchData2:1})
       }
 
 
 
       async  loadMorePopularSeries(pageNumber){
-
+        
         switch(this.state.currentSeriesNav){
             case 'popular':
             const data = await getPopularseries(pageNumber);
@@ -149,19 +176,19 @@ class  cards extends Component{
 
 
       async  loadMorePopularMovies(pageNumber){
-
+        
         switch(this.state.currentmoviesNav){
             case 'popular':
             const data = await getPopularMovies(pageNumber);
-            this.setState({Data:[...this.state.Data,...data.results],progress:false,pageNumberToFetchData:pageNumber});
+            this.setState({Data:[...data.results],progress:false,pageNumberToFetchData2:pageNumber});
             break;
             case 'topRated':
             const TopRatedMovies = await getTopRatedMovies(pageNumber);
-            this.setState({Data:[...this.state.Data,...TopRatedMovies.results],progress:false,pageNumberToFetchData:pageNumber});
+            this.setState({Data:[...TopRatedMovies.results],progress:false,pageNumberToFetchData2:pageNumber});
             break;
             case 'upcoming':
             const upcomingMovies = await getUpComingMovies(pageNumber);
-            this.setState({Data:[...this.state.Data,...upcomingMovies.results],progress:false,pageNumberToFetchData:pageNumber});
+            this.setState({Data:[...upcomingMovies.results],progress:false,pageNumberToFetchData2:pageNumber});
             break;
 
             default:
@@ -190,6 +217,16 @@ class  cards extends Component{
           );
         }
 
+        let active2 = this.state.pageNumberToFetchData2;
+        let items2 = [];
+        for (let number = 1; number <= 10; number++) {
+          items2.push(
+            <Pagination.Item onClick={()=> this.loadMorePopularMovies(number)} key={number} active={number === active2}>
+              {number}
+            </Pagination.Item>,
+          );
+        }
+
 
         return (
             <div>
@@ -197,7 +234,7 @@ class  cards extends Component{
             
               {this.state.header === 'Popular Tv Shows' ? 
               <div  className="SeriesStyle">
-          {this.state.Navflag ?
+         
                    
                    <Navbar className="SeriesNavStyle"  sticky="top">
                    <Nav  defaultActiveKey={this.state.currentSeriesNav} >
@@ -220,10 +257,10 @@ class  cards extends Component{
      <Nav.Link > <Spinner animation="border"  size="sm"/></Nav.Link>
      </Nav.Item>: null }
    </Nav>    
-                   </Navbar> :null
-                  }
+                   </Navbar> 
+                
               
-              {/* <h1 className="mainHeader">{this.state.header}</h1> */}
+             
               
             <div   className="divStyle">
             {this.state.Data.map(item =>
@@ -289,20 +326,20 @@ state:{   DataID: item.id,  DataType: 'Series'}
               <div className="SeriesStyle">
 
 <Navbar className="MoviesNavStyle" sticky="top">
-<Nav  defaultActiveKey="/">
+<Nav  defaultActiveKey={this.state.currentmoviesNav}>
   <Nav.Item >
 
-  <Nav.Link eventKey="/" className="SecNavStyle" onClick={this.SetpopularMovies}>Most Popular</Nav.Link>
+  <Nav.Link eventKey="popular" className="SecNavStyle" onClick={this.SetpopularMovies}>Most Popular</Nav.Link>
   </Nav.Item>
    <Nav.Link > || </Nav.Link>
 
   <Nav.Item >
-  <Nav.Link eventKey="link-1" className="SecNavStyle" onClick={this.GetTopRatedMovies}>Top Rated</Nav.Link>
+  <Nav.Link eventKey="topRated" className="SecNavStyle" onClick={this.GetTopRatedMovies}>Top Rated</Nav.Link>
   </Nav.Item>
  <Nav.Link > || </Nav.Link> 
 
   <Nav.Item>
-  <Nav.Link eventKey="link-2" className="SecNavStyle" onClick={this.GetUpComingMovies}>Upcoming..</Nav.Link>
+  <Nav.Link eventKey="upcoming" className="SecNavStyle" onClick={this.GetUpComingMovies}>Upcoming..</Nav.Link>
   </Nav.Item>
   {this.state.progress ? <Nav.Item>
   <Nav.Link > <Spinner animation="border" size="sm" /></Nav.Link>
@@ -314,7 +351,7 @@ state:{   DataID: item.id,  DataType: 'Series'}
                {this.state.Data.map(item =>
          <Card  className="FigureStyle"  key={item.id}>
     
-         <Link  onClick={this.setInLocalStorage} to={{
+         <Link  onClick={this.setInLocalStorage2} to={{
   pathname: `/SeriesPage/${item.id}`,
   state:{   DataID: item.id,  DataType: 'Movie'}}} >
         
@@ -353,9 +390,8 @@ state:{   DataID: item.id,  DataType: 'Series'}
    
    <div  className="laodMoreData">
             <hr></hr>
-          <Pagination size="sm">{items}</Pagination>
+          <Pagination >{items2}</Pagination>
             </div>
-          
            
             <br></br>
            
