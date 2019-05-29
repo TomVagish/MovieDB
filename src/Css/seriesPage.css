@@ -9,6 +9,17 @@ transition: 0.5s all;
 
 }
 
+.favoriteImg{
+  padding: 0%;
+  margin: 0%;
+
+  width: 5%;
+  transition: 0.3s all;
+}
+.favoriteImg:hover{
+ cursor: pointer;
+ transform: scale(1.1,1.1);
+}
 
 
 .backDropImg{

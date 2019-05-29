@@ -16,6 +16,7 @@ constructor(props){
 
     }
 
+    this.AddtofavoriteList = this.AddtofavoriteList.bind(this);
 }
 
  componentDidMount(){
@@ -25,6 +26,10 @@ constructor(props){
     }else 
   
     this.getMovieData();
+   }
+
+   AddtofavoriteList(){
+    console.log(this.state.DataDetails.name);
    }
 
 
@@ -66,9 +71,8 @@ getMovieData(){
                 {this.state.afterFetch ? 
                 <div>
                      <div  className="headerPage">
-               
+                    <img onClick={this.AddtofavoriteList} className="favoriteImg" alt="" title="Add to favorite" src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/heart_blue.png" ></img>
                      <img className="posterImg" src={this.state.ImagePath + item.poster_path} alt=""></img>
-
 
          {this.state.DataType === 'Series' ? <h1 className="seriesName">{item.name}</h1> : <h1 className="seriesName">{item.title}</h1> }
 
