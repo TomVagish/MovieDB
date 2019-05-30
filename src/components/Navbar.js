@@ -43,7 +43,8 @@ render(){
     <img className="mainreactLogo" src={logo} alt=""></img>
     <Nav   defaultActiveKey="/" className="mr-auto">
 
-    <Link className="SecNavStyle" to={`/`}><Navbar.Brand>Tv shows</Navbar.Brand></Link>
+    <Link className="SecNavStyle" to={`/`}><Navbar.Brand>Home</Navbar.Brand></Link>
+    <Link className="SecNavStyle" to={`/Tvshow`}><Navbar.Brand>Tv shows</Navbar.Brand></Link>
     <Link className="SecNavStyle" to={`/Movies`}><Navbar.Brand >Movies</Navbar.Brand></Link>
     
     </Nav>
