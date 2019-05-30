@@ -66,8 +66,15 @@ class App extends Component {
       return (
         <div className="allSite">
              <Navbar ></Navbar>
-
+           
           <h1 className="SeriesHeaderStyle">Most Popular Series</h1>
+          <ul className="navigationDot">
+               <li style={{background:this.state.StartSliceHere === 0 ? 'orange': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 4 ? 'orange': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 8 ? 'orange': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 12 ? 'orange': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 16 ? 'orange': null}} className="dot"></li>
+             </ul>
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
             {SpliceTvshowArray.map(item =>
@@ -90,7 +97,7 @@ class App extends Component {
      
         <div className="top">{item.name}<br></br>{item.first_air_date}<br></br> </div>
         <div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
-
+        
 
 
       
@@ -105,6 +112,13 @@ class App extends Component {
        
                </div>}
             <h1 className="MoviesHeaderStyle">Most Popular Movies</h1>
+            <ul className="navigationDot">
+               <li style={{background:this.state.StartSliceHere === 0 ? 'aquamarine': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 4 ? 'aquamarine': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 8 ? 'aquamarine': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 12 ? 'aquamarine': null}} className="dot"></li>
+               <li style={{background:this.state.StartSliceHere === 16 ? 'aquamarine': null}} className="dot"></li>
+             </ul>
             
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
@@ -144,7 +158,8 @@ class App extends Component {
                </div>}
 
       
-     
+              
+
              {/* {this.state.afterFetchTvshow ? <Cards  header={'Popular Tv Shows'} data={this.state.popularTvShow}></Cards>
              : <div className="spinnerStyle">
              <Spinner animation="grow" variant="primary" />
