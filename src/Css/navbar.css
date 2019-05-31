@@ -43,3 +43,11 @@
   }
 }
 
+.SecNavStyle{
+  transition: 0.2s all;
+}
+
+.SecNavStyle:hover{
+transform: scale(1.1,1.1);
+  
+}

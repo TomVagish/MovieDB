@@ -36,7 +36,6 @@ class App extends Component {
 
 
   async componentDidMount(){
-
     const page = 1;
     const themostPopularTvshow = await getpopular(page);
     const themostPopularMovie = await getpopularMovie(page);
@@ -49,7 +48,7 @@ class App extends Component {
         this.setState({StartSliceHere:this.state.StartSliceHere+4,EndSliceHere:this.state.EndSliceHere+4});
 
       }
-    }, 7000);
+    }, 5000);
   }
 
 
@@ -63,18 +62,21 @@ class App extends Component {
       SpliceMoviesArray = this.state.popularMovie.results.slice(this.state.StartSliceHere,this.state.EndSliceHere);
     }
 
+
+
       return (
         <div className="allSite">
              <Navbar ></Navbar>
            
           <h1 className="SeriesHeaderStyle">Most Popular Series</h1>
-          <ul className="navigationDot">
+          <div className="navigationDot">
                <li style={{background:this.state.StartSliceHere === 0 ? 'orange': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 4 ? 'orange': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 8 ? 'orange': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 12 ? 'orange': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 16 ? 'orange': null}} className="dot"></li>
-             </ul>
+          </div>
+       
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
             {SpliceTvshowArray.map(item =>
@@ -111,14 +113,15 @@ class App extends Component {
         <Spinner animation="grow" variant="info" />
        
                </div>}
+               
             <h1 className="MoviesHeaderStyle">Most Popular Movies</h1>
-            <ul className="navigationDot">
+            <div className="navigationDot">
                <li style={{background:this.state.StartSliceHere === 0 ? 'aquamarine': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 4 ? 'aquamarine': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 8 ? 'aquamarine': null}} className="dot"></li>
                <li style={{background:this.state.StartSliceHere === 12 ? 'aquamarine': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 16 ? 'aquamarine': null}} className="dot"></li>
-             </ul>
+               <li style={{background:this.state.StartSliceHere === 16 ? 'aquamarine': null}} className="dot"></li>  
+            </div>
             
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">

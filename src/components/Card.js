@@ -313,7 +313,7 @@ state:{   DataID: item.id,  DataType: 'Series'}
         
           <div  className="laodMoreData">
             <hr></hr>
-          <Pagination >{items}</Pagination>
+         <Pagination >{items}</Pagination>
             </div>
           
            
