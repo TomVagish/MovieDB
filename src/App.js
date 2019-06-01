@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import { Card,Spinner} from 'react-bootstrap';
-import Cards from './components/Card';
 import getpopular from './components/getPopular';
 import getpopularMovie from './components/getPopularMovies'
-
 import './Css/App.css';
 import Navbar from './components/Navbar';
+
 
 
 
@@ -40,8 +39,8 @@ class App extends Component {
     const themostPopularTvshow = await getpopular(page);
     const themostPopularMovie = await getpopularMovie(page);
     this.setState({popularTvShow:themostPopularTvshow,popularMovie:themostPopularMovie,afterFetchTvshow:true});
-    
-    setInterval(() => {
+
+    setInterval(() =>{ 
       if(this.state.StartSliceHere === 16){
         this.setState({StartSliceHere:0,EndSliceHere:4});
       }else{
@@ -53,14 +52,8 @@ class App extends Component {
 
 
 
-  render() {
 
-    let SpliceTvshowArray;
-    let SpliceMoviesArray;
-    if(this.state.afterFetchTvshow){
-      SpliceTvshowArray = this.state.popularTvShow.results.slice(this.state.StartSliceHere,this.state.EndSliceHere);
-      SpliceMoviesArray = this.state.popularMovie.results.slice(this.state.StartSliceHere,this.state.EndSliceHere);
-    }
+  render() {
 
 
 
@@ -70,16 +63,16 @@ class App extends Component {
            
           <h1 className="SeriesHeaderStyle">Most Popular Series</h1>
           <div className="navigationDot">
-               <li style={{background:this.state.StartSliceHere === 0 ? 'orange': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 4 ? 'orange': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 8 ? 'orange': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 12 ? 'orange': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 16 ? 'orange': null}} className="dot"></li>
+               <li  style={{background:this.state.StartSliceHere === 0 ? 'orange': null}} className="dot"></li>
+               <li  style={{background:this.state.StartSliceHere === 4 ? 'orange': null}} className="dot"></li>
+               <li  style={{background:this.state.StartSliceHere === 8 ? 'orange': null}} className="dot"></li>
+               <li  style={{background:this.state.StartSliceHere === 12 ? 'orange': null}} className="dot"></li>
+               <li  style={{background:this.state.StartSliceHere === 16 ? 'orange': null}} className="dot"></li>
           </div>
        
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
-            {SpliceTvshowArray.map(item =>
+            {this.state.popularTvShow.results.slice(this.state.StartSliceHere,this.state.EndSliceHere).map(item =>
          <Card className="CardStyle"   key={item.id}>
  
 
@@ -125,7 +118,7 @@ class App extends Component {
             
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
-            {SpliceMoviesArray.map(item =>
+            {this.state.popularMovie.results.slice(this.state.StartSliceHere,this.state.EndSliceHere).map(item =>
          <Card className="CardStyle2"   key={item.id}>
  
 

@@ -89,7 +89,17 @@ getMovieData(){
  {this.state.DataType === 'Series' ? <h5 className="avarageRate">{item.vote_average * 10}% loved this series</h5> : <h5 className="avarageRate">{item.vote_average * 10}% loved this movie</h5>}
  
  
- {this.state.DataType === 'Movie' ? <h5  >Release date : <b>{ item.release_date}</b></h5> :
+ {this.state.DataType === 'Movie' ? 
+ <div>
+ <h5> Release date : <b>{ item.release_date}</b></h5>
+ <h5> Budget : <b>{ item.budget}$</b></h5>
+
+ <img className="ClockImg" src="https://cdn3.iconfinder.com/data/icons/time-clock-1/100/Time_2_00-512.png" alt=""></img>
+ <h5><b >{ item.runtime}</b></h5>
+
+
+
+ </div> :
  <div>
  <h5  >First Air Date : <b>{ item.first_air_date}</b></h5>
  <h5>Number Of Seasons : <b> {item.number_of_seasons}</b></h5>
