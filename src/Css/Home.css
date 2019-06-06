@@ -20,7 +20,7 @@
 
 .CardStyle{
     position: relative;
-    width: 20%;
+    width: 12%;
     margin: 1%;
     box-shadow:  3px 3px 5px 6px rgb(36, 36, 36);
 }
@@ -38,7 +38,7 @@
 
       .CardStyle2{
         position: relative;
-        width: 20%;
+        width: 12%;
         margin: 1%;
         box-shadow:  3px 3px 5px 6px rgb(36, 36, 36);
     }
@@ -78,12 +78,12 @@
 
 @media only screen and (max-width: 992px) {
   .CardStyle {
-   width: 40%;
+   width: 20%;
     
    
   }
   .CardStyle2 {
-   width: 40%;
+   width: 20%;
     
    
   }
@@ -93,10 +93,10 @@
 
 @media only screen and (max-width: 600px) {
   .CardStyle{
-   width: 40%;
+   width: 20%;
   }
   .CardStyle2{
-   width: 40%;
+   width: 20%;
   }
 
 
@@ -303,18 +303,19 @@
               }
             }
 
-            .dot {
-  height: 10px;
-  width: 10px;
-  background-color: rgb(109, 109, 109);
-  border-radius: 50%;
-  display: inline-block;
-  margin-left: 1%;
-}
 
-.navigationDot{
-  
-  text-align:center;
-}
+            .TomLinkedIn{
+                text-align: center;
+                font-family: 'Courier New', Courier, monospace;
+                background-color: #cfcfcfd3;
+                font-size: 25px;
+                margin: 2% 0% 2% 0%;
+                
+                
+          
+            }
 
-
+            .a{
+                color: rgb(62, 129, 107);
+                font-weight: bold;
+            }

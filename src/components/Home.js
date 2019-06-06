@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import { combineReducers,createStore } from 'redux';
 import { Provider } from 'react-redux'
+import {Link} from 'react-router-dom';
 import { Card,Spinner} from 'react-bootstrap';
 import getpopular from './getPopular';
 import getpopularMovie from './getPopularMovies'
@@ -59,7 +60,7 @@ class Home extends Component {
         super()
         this.state = {
           StartSliceHere:0,
-          EndSliceHere:4,
+          EndSliceHere:14,
           popularTvShow:[],
           popularMovie:[],
           afterFetchTvshow:false,
@@ -83,14 +84,6 @@ class Home extends Component {
         const themostPopularMovie = await getpopularMovie(page);
         this.setState({popularTvShow:themostPopularTvshow,popularMovie:themostPopularMovie,afterFetchTvshow:true,afterFetchMovie:true});
     
-        setInterval(() =>{ 
-          if(this.state.StartSliceHere === 16){
-            this.setState({StartSliceHere:0,EndSliceHere:4});
-          }else{
-            this.setState({StartSliceHere:this.state.StartSliceHere+4,EndSliceHere:this.state.EndSliceHere+4});
-    
-          }
-        }, 5000);
       }
     
 
@@ -107,9 +100,13 @@ class Home extends Component {
           {this.state.afterFetchTvshow ?        
             <div   className="IntervalInHomeStyle">
             {this.state.popularTvShow.results.slice(this.state.StartSliceHere,this.state.EndSliceHere).map(item =>
-         <Card className="CardStyle"   key={item.id}>
+   
 
+   
+   <Card className="CardStyle"   key={item.id}>
+ <Link to={'/Tvshow'}>
          {item.poster_path ? 
+        
    <Card.Img
    title={item.name}
    className="imgFigure"
@@ -127,6 +124,8 @@ class Home extends Component {
         <div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
         
 
+        
+        </Link>
 
       
        </Card>)}
@@ -140,13 +139,8 @@ class Home extends Component {
        
                </div>}
                <br></br>
-               <div className="navigationDot">
-               <li  style={{background:this.state.StartSliceHere === 0 ? 'orange': null}} className="dot"></li>
-               <li  style={{background:this.state.StartSliceHere === 4 ? 'orange': null}} className="dot"></li>
-               <li  style={{background:this.state.StartSliceHere === 8 ? 'orange': null}} className="dot"></li>
-               <li  style={{background:this.state.StartSliceHere === 12 ? 'orange': null}} className="dot"></li>
-               <li  style={{background:this.state.StartSliceHere === 16 ? 'orange': null}} className="dot"></li>
-          </div>
+        
+        
      
             <h1 className="MoviesHeaderStyle">Most Popular Movies</h1>
         
@@ -154,7 +148,7 @@ class Home extends Component {
             <div   className="IntervalInHomeStyle">
             {this.state.popularMovie.results.slice(this.state.StartSliceHere,this.state.EndSliceHere).map(item =>
          <Card className="CardStyle2"   key={item.id}>
- 
+ <Link to={'/Movies'}>
 
          {item.poster_path ? 
    <Card.Img
@@ -174,7 +168,7 @@ class Home extends Component {
         <div className="bottom">{item.vote_average * 10}%  <img className="loveicon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/1024px-Emoji_u2665.svg.png" alt=""></img></div>
 
 
-
+        </Link>
       
        </Card>)}
             </div>       : <div className="spinnerStyle">
@@ -188,14 +182,11 @@ class Home extends Component {
                </div>
               }
  <br></br>
-               <div className="navigationDot">
-               <li style={{background:this.state.StartSliceHere === 0 ? 'aquamarine': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 4 ? 'aquamarine': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 8 ? 'aquamarine': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 12 ? 'aquamarine': null}} className="dot"></li>
-               <li style={{background:this.state.StartSliceHere === 16 ? 'aquamarine': null}} className="dot"></li>  
-            </div>
-      
+    
+            <hr></hr>
+         
+              <h1 className="TomLinkedIn"><a className="a" target="blank" href={'https://www.linkedin.com/in/tom-vagish-64a21a168/'} >Tom Vagish</a></h1>
+             
             <br></br>
 
           
