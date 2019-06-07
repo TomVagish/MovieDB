@@ -95,7 +95,7 @@ getMovieData(){
  <h5> Budget : <b>{ item.budget}$</b></h5>
 
  <img className="ClockImg" src="https://cdn3.iconfinder.com/data/icons/time-clock-1/100/Time_2_00-512.png" alt=""></img>
- <h5><b >{ item.runtime}</b></h5>
+ <h5><b>{item.runtime}m</b></h5>
 
 
 

@@ -39,12 +39,14 @@ class NavBar extends Component{
 render(){
   return (
     <div>
-      <Navbar    bg="dark" variant="dark">
+      <Navbar    bg="dark" variant="dark" sticky="top">
     <img className="mainreactLogo" src={logo} alt=""></img>
     <Nav  defaultActiveKey="/"   className="mr-auto">
 
     <Link className="SecNavStyle" to={`/`}><Navbar.Brand>Home</Navbar.Brand></Link>
+    <Navbar.Brand>|</Navbar.Brand>
     <Link className="SecNavStyle" to={`/Tvshow`}><Navbar.Brand>Tv-shows</Navbar.Brand></Link>
+    <Navbar.Brand>|</Navbar.Brand>
     <Link className="SecNavStyle" to={`/Movies`}><Navbar.Brand >Movies</Navbar.Brand></Link>
     
     </Nav>
@@ -57,7 +59,7 @@ render(){
       <FormControl value={this.state.inputData} onChange={this.handleChange} type="text" placeholder="Search" className="mr-sm-1" />
       <Button onClick={this.newSearch} variant="outline-info">Search</Button>
     </Form> */}
-                        <img className="favoriteImg" alt="" title="Favorite List" src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/heart_blue.png" ></img>
+      <img className="favoriteImg" alt="" title="Favorite List" src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/heart_blue.png" ></img>
 
   </Navbar>
 
