@@ -40,7 +40,7 @@ render(){
   return (
     <div>
       <Navbar    bg="dark" variant="dark" sticky="top">
-    <img className="mainreactLogo" src={logo} alt=""></img>
+  
     <Nav  defaultActiveKey="/"   className="mr-auto">
 
     <Link className="SecNavStyle" to={`/`}><Navbar.Brand>Home</Navbar.Brand></Link>
